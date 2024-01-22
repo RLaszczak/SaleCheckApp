@@ -1,0 +1,135 @@
+﻿@{
+    ViewData["Title"] = "Porównywarka cen";
+}
+
+<!DOCTYPE html>
+
+<head runat="server">
+    <title>Porównywarka cen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            margin: 0;
+        }
+
+        #container {
+            display: flex;
+            max-width: 800px;
+            margin: 50px auto;
+        }
+
+        #categories {
+            width: 20%;
+            padding: 5px;
+            background-color: white;
+            border-radius: 5px;
+            overflow-y: auto;
+            text-align: center;
+        }
+
+        #queryAndResults {
+            flex-grow: 1;
+            padding: 10px;
+            background-color: black;
+            border-radius: 5px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-start; 
+        }
+
+        #queryInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #444;
+            color: orange;
+        }
+
+        #resultArea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #555;
+        }
+
+        #categoriesList {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .categoryItem {
+            padding: 8px;
+            margin-bottom: 5px;
+            background-color: #666;
+            border-radius: 3px;
+            cursor: pointer;
+            color: white;
+        }
+
+            .categoryItem:hover {
+                background-color: orange;
+            }
+
+        h3 {
+            color: orange;
+        }
+
+        h1 {
+            color: orange;
+            margin-bottom: 10px; 
+        }
+
+        #compareButton {
+            align-self: flex-end;
+            margin-bottom: 10px;
+            background-color: gray;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            #compareButton:hover {
+                background-color: orange;
+            }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div id="container">
+            <div id="categories">
+                <h3>Kategorie</h3>
+                <ul id="categoriesList">
+                    <li class="categoryItem" onclick="loadCategory(48)">1:48</li>
+                    <li class="categoryItem" onclick="loadCategory(72)">1:72</li>
+                    <li class="categoryItem" onclick="loadCategory(144)">1:144</li>
+                    <li class="categoryItem" onclick="loadCategory(350)">1:350</li>
+                    <li class="categoryItem" onclick="loadCategory(700)">1:700</li>
+                </ul>
+            </div>
+            <div id="queryAndResults">
+                <h1>Czego szukasz?</h1>
+                <input type="text" id="queryInput" placeholder="Wpisz zapytanie do bazy danych..." />
+                <button type="button" id="compareButton" onclick="submitQuery()">Wyszukaj w bazie</button>
+                <div id="resultArea"></div>
+            </div>
+        </div>
+    </form>
+    <script>
+        function loadCategory(category) {
+            document.getElementById("resultArea").innerHTML = "Wczytywanie produktów z kategorii " + category + "...";
+        }
+
+        function submitQuery() {
+            var queryInput = document.getElementById("queryInput").value;
+            document.getElementById("resultArea").innerHTML = "Wyszukiwanie: " + queryInput + "...";
+        }
+    </script>
+</body>

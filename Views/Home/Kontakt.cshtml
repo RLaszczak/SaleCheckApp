@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Kontakt";
+}
+<h1>@ViewData["Title"]</h1>
+
+
+<style>
+    body {
+        background-color: black;
+        color: white;
+    }
+
+    .contact-container {
+        background-color: black;
+        color: orange;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 5px;
+    }
+
+    .contact-details {
+        margin-top: 15px;
+    }
+
+    form {
+        margin-top: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+        input[type="submit"] {
+            background-color: orange;
+            color: black;
+            cursor: pointer;
+        }
+</style>
+
+<div class="contact-container">
+    <p>Masz pytania lub uwagi? Jesteśmy do Twojej dyspozycji.</p>
+
+    <div class="contact-details">
+        <p><strong>Adres:</strong> ul. Przykładowa 123, 00-000 Warszawa</p>
+        <p><strong>Telefon:</strong> +48 123 456 789</p>
+        <p><strong>Email:</strong> kontakt@salecheckapp.com</p>
+    </div>
+
+    <form>
+        <label for="name">Imię:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Wiadomość:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+
+        <input type="submit" value="Wyślij">
+    </form>
+</div>
+
