@@ -1,7 +1,9 @@
-using MongoDB.Bson.Serialization.Conventions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
-using MongoDB.Bson;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,27 +11,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 //Mongo
-
 builder.Services.AddSingleton<IMongoDatabase>(serviceProvider =>
 {
-
-
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
     var mongoDbConnectionString = configuration.GetConnectionString("MongoDB");
 
-    var pack = new ConventionPack
-    {
-        new CamelCaseElementNameConvention(),
-        new StringIdStoredAsObjectIdConvention()
-    };
-    ConventionRegistry.Register("ZPP2_convention", pack, _ => true);
-
-    var url = new MongoUrl(mongoDbConnectionString);
-    var settings = MongoClientSettings.FromUrl(url);
-    var client = new MongoClient(settings);
-    return client.GetDatabase(url.DatabaseName);
+    var mongoClient = new MongoClient(mongoDbConnectionString);
+    return mongoClient.GetDatabase("SALECHECK"); 
 });
-
 
 var app = builder.Build();
 
@@ -37,28 +26,10 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
-//³¹czenie z Mongo DB
-
-/*var pack = new ConventionPack
-{
-    new CamelCaseElementNameConvention(),
-    new StringIdStoredAsObjectIdConvention()
-};
-ConventionRegistry.Register("ZPP2_convention", pack, _ => true);*/
-
-
-//MongoUrl url = new MongoUrl(builder.Configuration.GetConnectionString("MongoDB"));
-//MongoClientSettings settings = MongoClientSettings.FromUrl(url);
-//MongoClient client = new MongoClient(settings);
-//IMongoDatabase database = client.GetDatabase(url.DatabaseName);
-
-
-//³¹czenie z Mongo DB
-
+// ³¹czenie z Mongo DB - mo¿na pomin¹æ, poniewa¿ ju¿ dodaliœmy to jako singleton w us³ugach
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

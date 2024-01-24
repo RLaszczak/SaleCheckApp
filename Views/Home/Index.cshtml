@@ -99,6 +99,11 @@
             #compareButton:hover {
                 background-color: orange;
             }
+
+        #progressBar {
+            width: 100%;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -118,12 +123,19 @@
                 <h1>Czego szukasz?</h1>
                 <input type="text" id="queryInput" placeholder="Wpisz zapytanie do bazy danych..." />
                 <button type="button" id="compareButton" onclick="submitQuery()">Wyszukaj w bazie</button>
+                <!-- Pasek postępu -->
+                <progress id="progressBar" value="0" max="100"></progress>
                 <div id="resultArea"></div>
             </div>
         </div>
     </form>
     <script>
+        import fetch from 'cross-fetch';
 
+        function updateProgressBar(value) {
+            // Aktualizuj pasek postępu
+            document.getElementById("progressBar").value = value;
+        }
 
         function loadCategory(category) {
             document.getElementById("resultArea").innerHTML = "Wczytywanie produktów z kategorii " + category + "...";
@@ -132,9 +144,15 @@
         function submitQuery() {
             var queryInput = document.getElementById("queryInput").value;
 
+            // Pokaż pasek postępu na początku zapytania
+            updateProgressBar(0);
+
             fetch(`/api/products?query=${encodeURIComponent(queryInput)}`)
                 .then(response => response.json())
                 .then(data => {
+                    // Zakończ pasek postępu po zakończeniu zapytania
+                    updateProgressBar(100);
+
                     // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
                     document.getElementById("resultArea").innerHTML = JSON.stringify(data);
                 })
