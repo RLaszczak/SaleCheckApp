@@ -14,10 +14,9 @@ builder.Services.AddControllersWithViews();
 //Mongo
 builder.Services.AddSingleton<IMongoDatabase>(serviceProvider =>
 {
-    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-    var mongoDbConnectionString = configuration.GetConnectionString("MongoDBAtlas");
+    const string connectionUri = "mongodb+srv://Admin:Admin123@salecheck.xbacbcx.mongodb.net/?retryWrites=true&w=majority";
 
-    var mongoClient = new MongoClient(mongoDbConnectionString);
+    var mongoClient = new MongoClient(connectionUri);
 
     // Dodaj sprawdzenie stanu klastra MongoDB
     var clusterState = mongoClient.Cluster.Description.State;
@@ -41,7 +40,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
-
+    
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
