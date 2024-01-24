@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 using System;
+using static ProductController;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,16 +13,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 //Mongo
-builder.Services.AddSingleton<IMongoDatabase>(serviceProvider =>
+builder.Services.AddSingleton<IMongoCollection<Product>>(serviceProvider =>
 {
     const string connectionUri = "mongodb+srv://Admin:Admin123@salecheck.xbacbcx.mongodb.net/?retryWrites=true&w=majority";
 
     var mongoClient = new MongoClient(connectionUri);
+    var database = mongoClient.GetDatabase("SALECHECK");
 
-   
+    var collection = database.GetCollection<Product>("SaleCheckTest");
 
-    return mongoClient.GetDatabase("SALECHECK");
+    return collection;
 });
+
 
 var app = builder.Build();
 

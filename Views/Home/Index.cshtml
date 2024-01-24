@@ -127,6 +127,9 @@
                 <progress id="progressBar" value="0" max="100"></progress>
                 <p id="searchInfo">Liczba przeszukanych produktów: <span id="searchCount">0</span></p>
                 <div id="resultArea"></div>
+                <div id="actionInfo">
+                    <p><strong>Aktualna akcja:</strong> <span id="currentAction">Brak</span></p>
+                </div>
             </div>
 
            
@@ -157,28 +160,39 @@
                     console.error('Błąd podczas pobierania danych:', error);
                 });
         }
-        function submitQuery() {
+        async function submitQuery() {
             var queryInput = document.getElementById("queryInput").value;
+
+            // Aktualizuj informacje o działaniu przycisku
+            document.getElementById("currentAction").innerText = "Wyszukiwanie w bazie";
 
             // Pokaż pasek postępu na początku zapytania
             updateProgressBar(0);
 
-            // Wywołaj API, aby pobrać produkty na podstawie zapytania
-            fetch(`/api/products?query=${encodeURIComponent(queryInput)}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Zakończ pasek postępu po zakończeniu zapytania
-                    updateProgressBar(100);
+            try {
+                // Wywołaj API, aby pobrać produkty na podstawie zapytania
+                const response = await fetch(`/api/products?query=${encodeURIComponent(queryInput)}`);
+                const data = await response.json();
 
-                    // Wyświetl informację o liczbie przeszukanych produktów
-                    document.getElementById("searchCount").innerText = data.length;
+                // Zakończ pasek postępu po zakończeniu zapytania
+                updateProgressBar(100);
 
-                    // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
-                    renderProducts(data);
-                })
-                .catch(error => {
-                    console.error('Błąd podczas pobierania danych:', error);
-                });
+                // Wyświetl informację o liczbie przeszukanych produktów
+                document.getElementById("searchCount").innerText = data.length;
+
+                // Zaktualizuj informacje o działaniu przycisku
+                document.getElementById("currentAction").innerText = "Wyszukiwanie zakończone";
+
+                // Ukryj listę kategorii
+                document.getElementById("categoriesList").style.display = "none";
+
+                // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
+                renderProducts(data);
+            } catch (error) {
+                console.error('Błąd podczas pobierania danych:', error);
+                // Zaktualizuj informacje o działaniu przycisku w przypadku błędu
+                document.getElementById("currentAction").innerText = "Błąd podczas wyszukiwania";
+            }
         }
 
         function renderProducts(products) {
