@@ -88,3 +88,4 @@ C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\obj\Debug\net7.0\refint\Sa
 C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\obj\Debug\net7.0\SaleCheckApp.pdb
 C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\obj\Debug\net7.0\SaleCheckApp.genruntimeconfig.cache
 C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\obj\Debug\net7.0\ref\SaleCheckApp.dll
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\Source\pricelist.json

@@ -151,17 +151,20 @@
             // Pokaż pasek postępu na początku zapytania
             updateProgressBar(0);
 
-            fetch(`/api/products?query=${encodeURIComponent(queryInput)}`)
+            fetch(`/Source/pricelist.json`)
                 .then(response => response.json())
                 .then(data => {
                     // Zakończ pasek postępu po zakończeniu zapytania
                     updateProgressBar(100);
 
+                    // Filtruj dane na podstawie pola "Nazwa"
+                    var filteredData = data.filter(product => product.Nazwa.toLowerCase().includes(queryInput.toLowerCase()));
+
                     // Wyświetl informację o liczbie przeszukanych produktów
-                    document.getElementById("searchCount").innerText = data.length;
+                    document.getElementById("searchCount").innerText = filteredData.length;
 
                     // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
-                    document.getElementById("resultArea").innerHTML = JSON.stringify(data);
+                    document.getElementById("resultArea").innerHTML = JSON.stringify(filteredData);
                 })
                 .catch(error => {
                     console.error('Błąd podczas pobierania danych:', error);
