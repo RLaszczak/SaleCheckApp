@@ -1,0 +1,61 @@
+﻿
+<!DOCTYPE html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Wywołaj funkcję przy starcie strony
+        displayInitialProducts();
+    });
+
+    async function submitQuery() {
+        var queryInput = document.getElementById("queryInput").value;
+
+        // Aktualizuj informacje o działaniu przycisku
+        document.getElementById("currentAction").innerText = "Wyszukiwanie w bazie";
+
+        // Pokaż pasek postępu na początku zapytania
+        updateProgressBar(0);
+
+        try {
+            // Wywołaj API, aby pobrać produkty na podstawie zapytania
+            const response = await fetch(`/api/products?query=${encodeURIComponent(queryInput)}`);
+            const data = await response.json();
+
+            // Zakończ pasek postępu po zakończeniu zapytania
+            updateProgressBar(100);
+
+            // Wyświetl informację o liczbie przeszukanych produktów
+            document.getElementById("searchCount").innerText = data.length;
+
+            // Zaktualizuj informacje o działaniu przycisku
+            document.getElementById("currentAction").innerText = "Wyszukiwanie zakończone";
+
+            // Ukryj listę kategorii
+            document.getElementById("categoriesList").style.display = "none";
+
+            // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
+            renderProducts(data);
+        } catch (error) {
+            console.error('Błąd podczas pobierania danych:', error);
+            // Zaktualizuj informacje o działaniu przycisku w przypadku błędu
+            document.getElementById("currentAction").innerText = "Błąd podczas wyszukiwania";
+        }
+    }
+
+    function displayInitialProducts() {
+        // Wywołaj API, aby pobrać 15 pierwszych produktów
+        fetch(`/api/products/initialProducts`)
+            .then(response => response.json())
+            .then(data => {
+                // Wyświetl pobrane produkty w resultArea
+                updateProgressBar(100);
+                document.getElementById("searchCount").innerText = data.length;
+
+                // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
+                renderProducts(data);
+            })
+            .catch(error => {
+                console.error('Błąd podczas pobierania danych:', error);
+            });
+    }
+</script>
