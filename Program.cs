@@ -18,16 +18,7 @@ builder.Services.AddSingleton<IMongoDatabase>(serviceProvider =>
 
     var mongoClient = new MongoClient(connectionUri);
 
-    // Dodaj sprawdzenie stanu klastra MongoDB
-    var clusterState = mongoClient.Cluster.Description.State;
-    if (clusterState == MongoDB.Driver.Core.Clusters.ClusterState.Connected)
-    {
-        Console.WriteLine("Po³¹czono z baz¹ danych.");
-    }
-    else
-    {
-        Console.WriteLine("Nie uda³o siê po³¹czyæ z baz¹ danych.");
-    }
+   
 
     return mongoClient.GetDatabase("SALECHECK");
 });

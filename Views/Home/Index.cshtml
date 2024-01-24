@@ -134,6 +134,8 @@
         </div>
     </form>
     <script>
+        import fetch from 'cross-fetch';
+
         document.addEventListener("DOMContentLoaded", function () {
             // Wywołaj funkcję przy starcie strony
             displayInitialProducts();
@@ -141,37 +143,27 @@
 
         function displayInitialProducts() {
             // Wywołaj API, aby pobrać 15 pierwszych produktów
-            fetch(`/api/products?query=&limit=15`)
+            fetch(`/api/products/initialProducts`)
                 .then(response => response.json())
                 .then(data => {
                     // Wyświetl pobrane produkty w resultArea
                     updateProgressBar(100);
                     document.getElementById("searchCount").innerText = data.length;
-                    document.getElementById("resultArea").innerHTML = JSON.stringify(data);
+
+                    // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
+                    renderProducts(data);
                 })
                 .catch(error => {
                     console.error('Błąd podczas pobierania danych:', error);
                 });
         }
-
-
-        import fetch from 'cross-fetch';
-
-        function updateProgressBar(value) {
-            // Aktualizuj pasek postępu
-            document.getElementById("progressBar").value = value;
-        }
-
-        function loadCategory(category) {
-            document.getElementById("resultArea").innerHTML = "Wczytywanie produktów z kategorii " + category + "...";
-        }
-
         function submitQuery() {
             var queryInput = document.getElementById("queryInput").value;
 
             // Pokaż pasek postępu na początku zapytania
             updateProgressBar(0);
 
+            // Wywołaj API, aby pobrać produkty na podstawie zapytania
             fetch(`/api/products?query=${encodeURIComponent(queryInput)}`)
                 .then(response => response.json())
                 .then(data => {
@@ -182,10 +174,45 @@
                     document.getElementById("searchCount").innerText = data.length;
 
                     // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
-                    document.getElementById("resultArea").innerHTML = JSON.stringify(data);
+                    renderProducts(data);
                 })
                 .catch(error => {
                     console.error('Błąd podczas pobierania danych:', error);
                 });
+        }
+
+        function renderProducts(products) {
+            // Wyczyść resultArea przed dodaniem nowych danych
+            document.getElementById("resultArea").innerHTML = '';
+
+            // Jeśli nie ma wyników, wyświetl stosowną informację
+            if (products.length === 0) {
+                document.getElementById("resultArea").innerHTML = '<p>Brak wyników dla podanego zapytania.</p>';
+                return;
+            }
+
+            // Tutaj możesz dostosować kod do wyrenderowania produktów w twoim interfejsie użytkownika.
+            // Na przykład, możesz utworzyć elementy DOM dla każdego produktu i dodać je do odpowiedniego kontenera.
+            var productListHtml = '<ul>';
+            products.forEach(product => {
+                productListHtml += `<li>${product.Nazwa}</li>`;
+            });
+            productListHtml += '</ul>';
+
+            document.getElementById("resultArea").innerHTML = productListHtml;
+        }
+
+  
+
+        function updateProgressBar(value) {
+            // Aktualizuj pasek postępu
+            document.getElementById("progressBar").value = value;
+        }
+
+        function loadCategory(category) {
+            document.getElementById("resultArea").innerHTML = "Wczytywanie produktów z kategorii " + category + "...";
+        }
+
+
     </script>
 </body>
