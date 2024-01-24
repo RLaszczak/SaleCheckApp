@@ -33,7 +33,8 @@ public class ProductController : ControllerBase
     [HttpGet]
     public IActionResult GetProducts(string query)
     {
-        var filter = Builders<Product>.Filter.Text(query);
+        // Zmieniłem filtr na regex, aby szukać produktów o podobnej nazwie
+        var filter = Builders<Product>.Filter.Regex("Nazwa", new BsonRegularExpression($".*{query}.*", "i"));
         var results = _productCollection.Find(filter).ToList();
 
         // Przetwórz status dla każdego produktu przed zwróceniem wyników
@@ -64,5 +65,19 @@ public class ProductController : ControllerBase
             return "Nieznany"; // lub inna wartość domyślna dla nieznanych wartości
         }
     }
-}
+    [HttpGet("initialProducts")]
+    public IActionResult GetInitialProducts()
+    {
+        var limit = 15; // Ilość produktów do pobrania
+        var filter = Builders<Product>.Filter.Empty; // Pusty filtr oznacza brak warunków
+        var results = _productCollection.Find(filter).Limit(limit).ToList();
 
+        // Przetwórz status dla każdego produktu przed zwróceniem wyników
+        foreach (var product in results)
+        {
+            product.PrzetworzonyStatus = MapujStatus(product.Status);
+        }
+
+        return Ok(results);
+    }
+}

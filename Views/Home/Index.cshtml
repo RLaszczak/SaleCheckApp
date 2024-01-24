@@ -134,6 +134,27 @@
         </div>
     </form>
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Wywołaj funkcję przy starcie strony
+            displayInitialProducts();
+        });
+
+        function displayInitialProducts() {
+            // Wywołaj API, aby pobrać 15 pierwszych produktów
+            fetch(`/api/products?query=&limit=15`)
+                .then(response => response.json())
+                .then(data => {
+                    // Wyświetl pobrane produkty w resultArea
+                    updateProgressBar(100);
+                    document.getElementById("searchCount").innerText = data.length;
+                    document.getElementById("resultArea").innerHTML = JSON.stringify(data);
+                })
+                .catch(error => {
+                    console.error('Błąd podczas pobierania danych:', error);
+                });
+        }
+
+
         import fetch from 'cross-fetch';
 
         function updateProgressBar(value) {
@@ -151,24 +172,20 @@
             // Pokaż pasek postępu na początku zapytania
             updateProgressBar(0);
 
-            fetch(`/Source/pricelist.json`)
+            fetch(`/api/products?query=${encodeURIComponent(queryInput)}`)
                 .then(response => response.json())
                 .then(data => {
                     // Zakończ pasek postępu po zakończeniu zapytania
                     updateProgressBar(100);
 
-                    // Filtruj dane na podstawie pola "Nazwa"
-                    var filteredData = data.filter(product => product.Nazwa.toLowerCase().includes(queryInput.toLowerCase()));
-
                     // Wyświetl informację o liczbie przeszukanych produktów
-                    document.getElementById("searchCount").innerText = filteredData.length;
+                    document.getElementById("searchCount").innerText = data.length;
 
                     // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
-                    document.getElementById("resultArea").innerHTML = JSON.stringify(filteredData);
+                    document.getElementById("resultArea").innerHTML = JSON.stringify(data);
                 })
                 .catch(error => {
                     console.error('Błąd podczas pobierania danych:', error);
                 });
-        }
     </script>
 </body>

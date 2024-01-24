@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +15,22 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IMongoDatabase>(serviceProvider =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-    var mongoDbConnectionString = configuration.GetConnectionString("MongoDB");
+    var mongoDbConnectionString = configuration.GetConnectionString("MongoDBAtlas");
 
     var mongoClient = new MongoClient(mongoDbConnectionString);
-    return mongoClient.GetDatabase("SALECHECK"); 
+
+    // Dodaj sprawdzenie stanu klastra MongoDB
+    var clusterState = mongoClient.Cluster.Description.State;
+    if (clusterState == MongoDB.Driver.Core.Clusters.ClusterState.Connected)
+    {
+        Console.WriteLine("Po³¹czono z baz¹ danych.");
+    }
+    else
+    {
+        Console.WriteLine("Nie uda³o siê po³¹czyæ z baz¹ danych.");
+    }
+
+    return mongoClient.GetDatabase("SALECHECK");
 });
 
 var app = builder.Build();
@@ -28,8 +41,6 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
-
-// ³¹czenie z Mongo DB - mo¿na pomin¹æ, poniewa¿ ju¿ dodaliœmy to jako singleton w us³ugach
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
