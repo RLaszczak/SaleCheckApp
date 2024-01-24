@@ -125,8 +125,12 @@
                 <button type="button" id="compareButton" onclick="submitQuery()">Wyszukaj w bazie</button>
                 <!-- Pasek postępu -->
                 <progress id="progressBar" value="0" max="100"></progress>
+                <p id="searchInfo">Liczba przeszukanych produktów: <span id="searchCount">0</span></p>
                 <div id="resultArea"></div>
             </div>
+
+           
+
         </div>
     </form>
     <script>
@@ -152,6 +156,9 @@
                 .then(data => {
                     // Zakończ pasek postępu po zakończeniu zapytania
                     updateProgressBar(100);
+
+                    // Wyświetl informację o liczbie przeszukanych produktów
+                    document.getElementById("searchCount").innerText = data.length;
 
                     // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
                     document.getElementById("resultArea").innerHTML = JSON.stringify(data);

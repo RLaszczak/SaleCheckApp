@@ -22,7 +22,7 @@ public class ProductController : ControllerBase
         public decimal Waga { get; set; }
         public decimal CenaBezRabatu { get; set; }
         public string? Source { get; set; }
-
+        public string? PrzetworzonyStatus { get; set; }
     }
 
     public ProductController(IMongoDatabase database)
@@ -35,6 +35,34 @@ public class ProductController : ControllerBase
     {
         var filter = Builders<Product>.Filter.Text(query);
         var results = _productCollection.Find(filter).ToList();
+
+        // Przetwórz status dla każdego produktu przed zwróceniem wyników
+        foreach (var product in results)
+        {
+            product.PrzetworzonyStatus = MapujStatus(product.Status);
+        }
+
         return Ok(results);
     }
+
+    private string MapujStatus(string? status)
+    {
+        if (status == null)
+        {
+            return "Nieznany"; // lub inna wartość domyślna dla przypadku null
+        }
+        else if (status == "STATUS_1")
+        {
+            return "Dostępny";
+        }
+        else if (status == "STATUS_2")
+        {
+            return "Niedostępny";
+        }
+        else
+        {
+            return "Nieznany"; // lub inna wartość domyślna dla nieznanych wartości
+        }
+    }
 }
+
