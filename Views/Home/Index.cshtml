@@ -123,13 +123,24 @@
         </div>
     </form>
     <script>
+
+
         function loadCategory(category) {
             document.getElementById("resultArea").innerHTML = "Wczytywanie produktów z kategorii " + category + "...";
         }
 
         function submitQuery() {
             var queryInput = document.getElementById("queryInput").value;
-            document.getElementById("resultArea").innerHTML = "Wyszukiwanie: " + queryInput + "...";
+
+            fetch(`/api/products?query=${encodeURIComponent(queryInput)}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
+                    document.getElementById("resultArea").innerHTML = JSON.stringify(data);
+                })
+                .catch(error => {
+                    console.error('Błąd podczas pobierania danych:', error);
+                });
         }
     </script>
 </body>

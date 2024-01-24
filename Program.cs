@@ -1,5 +1,7 @@
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
+using MongoDB.Bson;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<IMongoDatabase>(serviceProvider =>
 {
+
+
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
     var mongoDbConnectionString = configuration.GetConnectionString("MongoDB");
 
@@ -25,6 +29,7 @@ builder.Services.AddSingleton<IMongoDatabase>(serviceProvider =>
     var client = new MongoClient(settings);
     return client.GetDatabase(url.DatabaseName);
 });
+
 
 var app = builder.Build();
 

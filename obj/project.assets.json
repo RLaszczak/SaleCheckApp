@@ -875,11 +875,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rrr23\\source\\repos\\SaleCheckApp\\SaleCheckApp.csproj",
+      "projectUniqueName": "C:\\Users\\rrr23\\OneDrive\\Dokumenty\\GitHub\\SaleCheckApp\\SaleCheckApp.csproj",
       "projectName": "SaleCheckApp",
-      "projectPath": "C:\\Users\\rrr23\\source\\repos\\SaleCheckApp\\SaleCheckApp.csproj",
+      "projectPath": "C:\\Users\\rrr23\\OneDrive\\Dokumenty\\GitHub\\SaleCheckApp\\SaleCheckApp.csproj",
       "packagesPath": "C:\\Users\\rrr23\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rrr23\\source\\repos\\SaleCheckApp\\obj\\",
+      "outputPath": "C:\\Users\\rrr23\\OneDrive\\Dokumenty\\GitHub\\SaleCheckApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

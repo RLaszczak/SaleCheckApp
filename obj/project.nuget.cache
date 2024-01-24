@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+8LI7vs3wI0PQYvWdjpuE9AGlyPMUdk9bnMr833jxVnQB8DoQTkYKmFLCWqkgEuSv2HtMILNaemo1T3ArcbNBA==",
+  "dgSpecHash": "7MD7xXpqspX57ICC41YVfd/M0Ty5tAuoyzZUw3aoVAeFbzgguPUnmy1P/8YRkX36YZCU9DdAm+JfmAk7HBlK/w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\rrr23\\source\\repos\\SaleCheckApp\\SaleCheckApp.csproj",
+  "projectFilePath": "C:\\Users\\rrr23\\OneDrive\\Dokumenty\\GitHub\\SaleCheckApp\\SaleCheckApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rrr23\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\rrr23\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",
