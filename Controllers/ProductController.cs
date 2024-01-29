@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
+using System;
+using System.Linq;
 
 [ApiController]
 [Route("api/products")]
@@ -33,17 +35,24 @@ public class ProductController : ControllerBase
     [HttpGet]
     public IActionResult GetProducts(string query)
     {
-        // Zmieniłem filtr na regex, aby szukać produktów o podobnej nazwie
-        var filter = Builders<Product>.Filter.Regex("Nazwa", new BsonRegularExpression($".*{query}.*", "i"));
-        var results = _productCollection.Find(filter).ToList();
-
-        // Przetwórz status dla każdego produktu przed zwróceniem wyników
-        foreach (var product in results)
+        try
         {
-            product.PrzetworzonyStatus = MapujStatus(product.Status);
-        }
+            // Zmieniłem filtr na regex, aby szukać produktów o podobnej nazwie
+            var filter = Builders<Product>.Filter.Regex("Nazwa", new BsonRegularExpression($".*{query}.*", "i"));
+            var results = _productCollection.Find(filter).ToList();
 
-        return Ok(results);
+            // Przetwórz status dla każdego produktu przed zwróceniem wyników
+            foreach (var product in results)
+            {
+                product.PrzetworzonyStatus = MapujStatus(product.Status);
+            }
+
+            return Ok(results);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
     }
 
     private string MapujStatus(string? status)
@@ -65,19 +74,25 @@ public class ProductController : ControllerBase
             return "Nieznany"; // lub inna wartość domyślna dla nieznanych wartości
         }
     }
-    [HttpGet("initialProducts")]
-    public IActionResult GetInitialProducts()
+
+    [HttpGet("allProducts")]
+    public IActionResult GetAllProducts()
     {
-        var limit = 15; // Ilość produktów do pobrania
-        var filter = Builders<Product>.Filter.Empty; // Pusty filtr oznacza brak warunków
-        var results = _productCollection.Find(filter).Limit(limit).ToList();
-
-        // Przetwórz status dla każdego produktu przed zwróceniem wyników
-        foreach (var product in results)
+        try
         {
-            product.PrzetworzonyStatus = MapujStatus(product.Status);
-        }
+            var products = _productCollection.Find(p => true).ToList();
 
-        return Ok(results);
+            // Process status for each product before returning the results
+            foreach (var product in products)
+            {
+                product.PrzetworzonyStatus = MapujStatus(product.Status);
+            }
+
+            return Ok(products);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
     }
 }

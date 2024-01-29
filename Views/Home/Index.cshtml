@@ -34,9 +34,9 @@
             padding: 10px;
             background-color: black;
             border-radius: 5px;
-            display: flex; 
-            flex-direction: column; 
-            align-items: flex-start; 
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         #queryInput {
@@ -76,13 +76,9 @@
                 background-color: orange;
             }
 
-        h3 {
+        h3, h1 {
             color: orange;
-        }
-
-        h1 {
-            color: orange;
-            margin-bottom: 10px; 
+            margin-bottom: 10px;
         }
 
         #compareButton {
@@ -106,6 +102,7 @@
         }
     </style>
 </head>
+
 <body>
     <form id="form1" runat="server">
         <div id="container">
@@ -127,13 +124,7 @@
                 <progress id="progressBar" value="0" max="100"></progress>
                 <p id="searchInfo">Liczba przeszukanych produktów: <span id="searchCount">0</span></p>
                 <div id="resultArea"></div>
-                <div id="actionInfo">
-                    <p><strong>Aktualna akcja:</strong> <span id="currentAction">Brak</span></p>
-                </div>
             </div>
-
-           
-
         </div>
     </form>
     <script>
@@ -141,30 +132,20 @@
 
         document.addEventListener("DOMContentLoaded", function () {
             // Wywołaj funkcję przy starcie strony
-            displayInitialProducts();
+            // displayInitialProducts(); // Usunięte, ponieważ nie są już wyświetlane 15 pierwszych produktów
         });
 
-        function displayInitialProducts() {
-            // Wywołaj API, aby pobrać 15 pierwszych produktów
-            fetch(`/api/products/initialProducts`)
-                .then(response => response.json())
-                .then(data => {
-                    // Wyświetl pobrane produkty w resultArea
-                    updateProgressBar(100);
-                    document.getElementById("searchCount").innerText = data.length;
-
-                    // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
-                    renderProducts(data);
-                })
-                .catch(error => {
-                    console.error('Błąd podczas pobierania danych:', error);
-                });
-        }
         async function submitQuery() {
             var queryInput = document.getElementById("queryInput").value;
 
+            // Ukryj listę kategorii
+            document.getElementById("categoriesList").style.display = "none";
+
             // Aktualizuj informacje o działaniu przycisku
-            document.getElementById("currentAction").innerText = "Wyszukiwanie w bazie";
+            var currentActionElement = document.getElementById("currentAction");
+            if (currentActionElement) {
+                currentActionElement.innerText = "Wyszukiwanie w bazie";
+            }
 
             // Pokaż pasek postępu na początku zapytania
             updateProgressBar(0);
@@ -172,26 +153,37 @@
             try {
                 // Wywołaj API, aby pobrać produkty na podstawie zapytania
                 const response = await fetch(`/api/products?query=${encodeURIComponent(queryInput)}`);
-                const data = await response.json();
 
-                // Zakończ pasek postępu po zakończeniu zapytania
-                updateProgressBar(100);
+                // Sprawdź, czy odpowiedź jest OK (status 200)
+                if (response.ok) {
+                    const data = await response.json();
 
-                // Wyświetl informację o liczbie przeszukanych produktów
-                document.getElementById("searchCount").innerText = data.length;
+                    // Zakończ pasek postępu po zakończeniu zapytania
+                    updateProgressBar(100);
 
-                // Zaktualizuj informacje o działaniu przycisku
-                document.getElementById("currentAction").innerText = "Wyszukiwanie zakończone";
+                    // Wyświetl informację o liczbie przeszukanych produktów
+                    document.getElementById("searchCount").innerText = data.length;
 
-                // Ukryj listę kategorii
-                document.getElementById("categoriesList").style.display = "none";
+                    // Zaktualizuj informacje o działaniu przycisku
+                    if (currentActionElement) {
+                        currentActionElement.innerText = "Wyszukiwanie zakończone";
+                    }
 
-                // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
-                renderProducts(data);
+                    // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
+                    renderProducts(data);
+                } else {
+                    // Jeśli odpowiedź nie jest OK, wyświetl komunikat o błędzie
+                    throw new Error('Błąd podczas pobierania danych: ' + response.statusText);
+                }
             } catch (error) {
                 console.error('Błąd podczas pobierania danych:', error);
                 // Zaktualizuj informacje o działaniu przycisku w przypadku błędu
-                document.getElementById("currentAction").innerText = "Błąd podczas wyszukiwania";
+                if (currentActionElement) {
+                    currentActionElement.innerText = "Błąd podczas wyszukiwania";
+                }
+
+                // Wyświetl komunikat o błędzie w resultArea
+                document.getElementById("resultArea").innerHTML = '<p>Błąd z bazą.</p>';
             }
         }
 
@@ -205,18 +197,19 @@
                 return;
             }
 
-            // Tutaj możesz dostosować kod do wyrenderowania produktów w twoim interfejsie użytkownika.
-            // Na przykład, możesz utworzyć elementy DOM dla każdego produktu i dodać je do odpowiedniego kontenera.
-            var productListHtml = '<ul>';
+            // Tworzymy tabelę HTML do wyświetlenia informacji o produktach
+            var tableHtml = '<table border="1"><tr><th>ID</th><th>Cena</th><th>Cena z Rabatem</th><th>Status</th><th>VAT</th><th>Nazwa</th><th>Waga</th><th>Cena bez Rabatu</th><th>Source</th></tr>';
+
+            // Dodajemy wiersze do tabeli na podstawie danych o produktach
             products.forEach(product => {
-                productListHtml += `<li>${product.Nazwa}</li>`;
+                tableHtml += `<tr><td>${product.Id}</td><td>${product.Cena}</td><td>${product.CenaZRabatem}</td><td>${product.PrzetworzonyStatus}</td><td>${product.VAT}</td><td>${product.Nazwa}</td><td>${product.Waga}</td><td>${product.CenaBezRabatu}</td><td>${product.Source}</td></tr>`;
             });
-            productListHtml += '</ul>';
 
-            document.getElementById("resultArea").innerHTML = productListHtml;
+            tableHtml += '</table>';
+
+            // Wstawiamy tabelę HTML do resultArea
+            document.getElementById("resultArea").innerHTML = tableHtml;
         }
-
-  
 
         function updateProgressBar(value) {
             // Aktualizuj pasek postępu
@@ -226,7 +219,5 @@
         function loadCategory(category) {
             document.getElementById("resultArea").innerHTML = "Wczytywanie produktów z kategorii " + category + "...";
         }
-
-
     </script>
 </body>

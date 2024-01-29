@@ -17,6 +17,8 @@ builder.Services.AddSingleton<IMongoCollection<Product>>(serviceProvider =>
 {
     const string connectionUri = "mongodb+srv://Admin:Admin123@salecheck.xbacbcx.mongodb.net/?retryWrites=true&w=majority";
 
+ 
+
     var mongoClient = new MongoClient(connectionUri);
     var database = mongoClient.GetDatabase("SALECHECK");    
 
@@ -24,7 +26,7 @@ builder.Services.AddSingleton<IMongoCollection<Product>>(serviceProvider =>
 
     return collection;
 });
-
+//get mongo
 
 var app = builder.Build();
 
