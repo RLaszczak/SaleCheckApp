@@ -37,11 +37,9 @@ public class ProductController : ControllerBase
     {
         try
         {
-            // Zmieniłem filtr na regex, aby szukać produktów o podobnej nazwie
             var filter = Builders<Product>.Filter.Regex("Nazwa", new BsonRegularExpression($".*{query}.*", "i"));
             var results = _productCollection.Find(filter).ToList();
 
-            // Przetwórz status dla każdego produktu przed zwróceniem wyników
             foreach (var product in results)
             {
                 product.PrzetworzonyStatus = MapujStatus(product.Status);
@@ -59,7 +57,7 @@ public class ProductController : ControllerBase
     {
         if (status == null)
         {
-            return "Nieznany"; // lub inna wartość domyślna dla przypadku null
+            return "Nieznany"; 
         }
         else if (status == "STATUS_1")
         {
@@ -71,7 +69,7 @@ public class ProductController : ControllerBase
         }
         else
         {
-            return "Nieznany"; // lub inna wartość domyślna dla nieznanych wartości
+            return "Nieznany"; 
         }
     }
 
@@ -82,7 +80,6 @@ public class ProductController : ControllerBase
         {
             var products = _productCollection.Find(p => true).ToList();
 
-            // Process status for each product before returning the results
             foreach (var product in products)
             {
                 product.PrzetworzonyStatus = MapujStatus(product.Status);

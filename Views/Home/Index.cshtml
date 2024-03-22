@@ -131,88 +131,68 @@
         import fetch from 'cross-fetch';
 
         document.addEventListener("DOMContentLoaded", function () {
-            // Wywołaj funkcję przy starcie strony
-            // displayInitialProducts(); // Usunięte, ponieważ nie są już wyświetlane 15 pierwszych produktów
         });
 
         async function submitQuery() {
             var queryInput = document.getElementById("queryInput").value;
 
-            // Ukryj listę kategorii
             document.getElementById("categoriesList").style.display = "none";
 
-            // Aktualizuj informacje o działaniu przycisku
             var currentActionElement = document.getElementById("currentAction");
             if (currentActionElement) {
                 currentActionElement.innerText = "Wyszukiwanie w bazie";
             }
 
-            // Pokaż pasek postępu na początku zapytania
             updateProgressBar(0);
 
             try {
-                // Wywołaj API, aby pobrać produkty na podstawie zapytania
                 const response = await fetch(`/api/products?query=${encodeURIComponent(queryInput)}`);
 
-                // Sprawdź, czy odpowiedź jest OK (status 200)
                 if (response.ok) {
                     const data = await response.json();
 
-                    // Zakończ pasek postępu po zakończeniu zapytania
                     updateProgressBar(100);
 
-                    // Wyświetl informację o liczbie przeszukanych produktów
                     document.getElementById("searchCount").innerText = data.length;
 
-                    // Zaktualizuj informacje o działaniu przycisku
                     if (currentActionElement) {
                         currentActionElement.innerText = "Wyszukiwanie zakończone";
                     }
 
-                    // Tutaj możesz obsłużyć otrzymane dane, np. umieścić je w elemencie HTML
                     renderProducts(data);
                 } else {
-                    // Jeśli odpowiedź nie jest OK, wyświetl komunikat o błędzie
                     throw new Error('Błąd podczas pobierania danych: ' + response.statusText);
                 }
             } catch (error) {
                 console.error('Błąd podczas pobierania danych:', error);
-                // Zaktualizuj informacje o działaniu przycisku w przypadku błędu
                 if (currentActionElement) {
                     currentActionElement.innerText = "Błąd podczas wyszukiwania";
                 }
 
-                // Wyświetl komunikat o błędzie w resultArea
                 document.getElementById("resultArea").innerHTML = '<p>Błąd z bazą.</p>';
             }
         }
 
         function renderProducts(products) {
-            // Wyczyść resultArea przed dodaniem nowych danych
             document.getElementById("resultArea").innerHTML = '';
 
-            // Jeśli nie ma wyników, wyświetl stosowną informację
             if (products.length === 0) {
                 document.getElementById("resultArea").innerHTML = '<p>Brak wyników dla podanego zapytania.</p>';
                 return;
             }
 
-            // Tworzymy tabelę HTML do wyświetlenia informacji o produktach
             var tableHtml = '<table border="1"><tr><th>ID</th><th>Cena</th><th>Cena z Rabatem</th><th>Status</th><th>VAT</th><th>Nazwa</th><th>Waga</th><th>Cena bez Rabatu</th><th>Source</th></tr>';
 
-            // Dodajemy wiersze do tabeli na podstawie danych o produktach
             products.forEach(product => {
                 tableHtml += `<tr><td>${product.Id}</td><td>${product.Cena}</td><td>${product.CenaZRabatem}</td><td>${product.PrzetworzonyStatus}</td><td>${product.VAT}</td><td>${product.Nazwa}</td><td>${product.Waga}</td><td>${product.CenaBezRabatu}</td><td>${product.Source}</td></tr>`;
             });
 
             tableHtml += '</table>';
 
-            // Wstawiamy tabelę HTML do resultArea
             document.getElementById("resultArea").innerHTML = tableHtml;
         }
 
         function updateProgressBar(value) {
-            // Aktualizuj pasek postępu
             document.getElementById("progressBar").value = value;
         }
 

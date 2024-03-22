@@ -89,3 +89,16 @@ C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\obj\Debug\net7.0\SaleCheck
 C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\obj\Debug\net7.0\SaleCheckApp.genruntimeconfig.cache
 C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\obj\Debug\net7.0\ref\SaleCheckApp.dll
 C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\Source\pricelist.json
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\Castle.Core.dll
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\Microsoft.Extensions.Logging.dll
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\Microsoft.Extensions.Primitives.dll
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\Moq.dll
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\nunit.framework.dll
+C:\Users\rrr23\OneDrive\Dokumenty\GitHub\SaleCheckApp\bin\Debug\net7.0\nunit.framework.legacy.dll
