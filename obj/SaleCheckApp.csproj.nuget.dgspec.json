@@ -45,6 +45,18 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.12, )"
+            },
+            "Hangfire.MemoryStorage": {
+              "target": "Package",
+              "version": "[1.8.0, )"
+            },
+            "Hangfire.Mongo": {
+              "target": "Package",
+              "version": "[1.10.4, )"
+            },
             "Microsoft.AspNetCore.Mvc.Core": {
               "target": "Package",
               "version": "[2.2.5, )"
@@ -55,19 +67,19 @@
             },
             "Microsoft.Extensions.Logging.Abstractions": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.1, )"
             },
             "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
-              "version": "[1.18.1, )"
+              "version": "[1.20.1, )"
             },
             "MongoDB.Bson": {
               "target": "Package",
-              "version": "[2.23.1, )"
+              "version": "[2.24.0, )"
             },
             "MongoDB.Driver": {
               "target": "Package",
-              "version": "[2.23.1, )"
+              "version": "[2.24.0, )"
             },
             "Moq": {
               "target": "Package",
@@ -75,7 +87,7 @@
             },
             "NUnit": {
               "target": "Package",
-              "version": "[4.0.1, )"
+              "version": "[4.1.0, )"
             }
           },
           "imports": [
