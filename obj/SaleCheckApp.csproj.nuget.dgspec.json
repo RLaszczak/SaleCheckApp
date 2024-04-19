@@ -57,6 +57,10 @@
               "target": "Package",
               "version": "[1.10.4, )"
             },
+            "HtmlAgilityPack": {
+              "target": "Package",
+              "version": "[1.11.60, )"
+            },
             "Microsoft.AspNetCore.Mvc.Core": {
               "target": "Package",
               "version": "[2.2.5, )"

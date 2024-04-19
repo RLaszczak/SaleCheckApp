@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7x2hWwXLJLfK2Jz9ic3Wqfl33fLGwOzsTsfnn65kfkcVa8DM77Naq+oRUFg1SOXrhj6T0CpNdF8pvfyWHTCdSg==",
+  "dgSpecHash": "yJPtlSQnPpmqr2qvoR9S0d7yiHZYZl1e1bSrM92hSdZbpot4F1TICvbgHAeSt4d4XuCahMzOvf7ivuIN8cARXg==",
   "success": true,
   "projectFilePath": "C:\\Users\\rrr23\\OneDrive\\Dokumenty\\GitHub\\SaleCheckApp\\SaleCheckApp.csproj",
   "expectedPackageFiles": [
@@ -15,6 +15,7 @@
     "C:\\Users\\rrr23\\.nuget\\packages\\hangfire.mongo\\1.10.4\\hangfire.mongo.1.10.4.nupkg.sha512",
     "C:\\Users\\rrr23\\.nuget\\packages\\hangfire.netcore\\1.8.12\\hangfire.netcore.1.8.12.nupkg.sha512",
     "C:\\Users\\rrr23\\.nuget\\packages\\hangfire.sqlserver\\1.8.12\\hangfire.sqlserver.1.8.12.nupkg.sha512",
+    "C:\\Users\\rrr23\\.nuget\\packages\\htmlagilitypack\\1.11.60\\htmlagilitypack.1.11.60.nupkg.sha512",
     "C:\\Users\\rrr23\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\rrr23\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
     "C:\\Users\\rrr23\\.nuget\\packages\\microsoft.aspnetcore.authorization\\2.2.0\\microsoft.aspnetcore.authorization.2.2.0.nupkg.sha512",
